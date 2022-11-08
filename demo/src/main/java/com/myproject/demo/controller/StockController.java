@@ -15,13 +15,14 @@ import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.StockRepositories;
 import com.myproject.demo.service.StockService;
 
+
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/v1")
 public class StockController {
 	
 	@Autowired
-	private  StockService stockService;
+	private StockService stockService;
 	
 	@Autowired
 	private StockRepositories stockRepository;
