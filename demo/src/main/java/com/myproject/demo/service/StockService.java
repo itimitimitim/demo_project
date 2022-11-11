@@ -3,6 +3,8 @@ package com.myproject.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.myproject.demo.domain.warpper.CreateItemWrapper;
+import com.myproject.demo.domain.warpper.EditItemWrapper;
 import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.StockRepositories;
 
@@ -12,17 +14,22 @@ public class StockService {
 	@Autowired
 	private StockRepositories stockRepository;
 	
-	public void createItem(String itemName, Integer amount) {
+	@Autowired
+	private ThrowService throwService;
+	
+	public void createItem(CreateItemWrapper wrapper) {
+//		throwService.checkItemnameAlreadyuse(wrapper.getItemName());
+		
 		StockEntity entity = new StockEntity();
-		entity.setItemName(itemName);
-		entity.setAmount(amount);
+		entity.setItemName(wrapper.getItemName());
+		entity.setAmount(wrapper.getAmount());
 		stockRepository.save(entity);
 		
 	}
 	
-	public void editItem(Integer id, String itemName) {
-		StockEntity entity = stockRepository.findById(id).get();
-		entity.setItemName(itemName);
+	public void editItem(EditItemWrapper wrapper) {
+		StockEntity entity = stockRepository.findById(wrapper.getItemID()).get();
+		entity.setItemName(wrapper.getItemName());
 		stockRepository.save(entity);
 		
 	}

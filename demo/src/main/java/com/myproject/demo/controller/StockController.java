@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myproject.demo.domain.warpper.CreateItemWrapper;
+import com.myproject.demo.domain.warpper.EditItemWrapper;
 import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.StockRepositories;
 import com.myproject.demo.service.StockService;
@@ -33,17 +36,17 @@ public class StockController {
 	}
 	
 	@PostMapping("/createItem")
-	public void createItem(@RequestParam("itemName")String itemName,@RequestParam("amount") Integer amount) {
-		stockService.createItem(itemName, amount);
+	public void createItem(@RequestBody CreateItemWrapper wrapper) {
+		stockService.createItem(wrapper);
 	}
 	
 	@PostMapping("/editItem")
-	public void editUser(@RequestParam("id")Integer id,@RequestParam("itemName") String itemName) {
-		stockService.editItem(id, itemName);
+	public void editUser(@RequestBody EditItemWrapper wrapper) {
+		stockService.editItem(wrapper);
 	}
 	
-	@PostMapping("/findUser")
-	public StockEntity findUser(@RequestParam("id")Integer id) {
+	@PostMapping("/findItem")
+	public StockEntity findItem(@RequestParam("id")Integer id) {
 		return stockService.findItem(id);
 	}
 	
