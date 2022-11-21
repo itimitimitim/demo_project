@@ -1,5 +1,8 @@
 package com.myproject.demo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +21,7 @@ public class StockService {
 	private ThrowService throwService;
 	
 	public void createItem(CreateItemWrapper wrapper) {
-//		throwService.checkItemnameAlreadyuse(wrapper.getItemName());
+		throwService.checkItemnameAlreadyuse(wrapper.getItemName());
 		
 		StockEntity entity = new StockEntity();
 		entity.setItemName(wrapper.getItemName());
@@ -40,18 +43,16 @@ public class StockService {
 		
 	}
 	
-//	public List<StockEntity> findItemByName(String itemName) {
-//		List<StockEntity> list = new ArrayList<StockEntity>();
-//		list.addAll(stockRepository.findByItemName(itemName));
-//		return list;
-//		
-//	}
+	public List<StockEntity> findItemByName(String itemName) {
+		List<StockEntity> list = new ArrayList<StockEntity>();
+		list.addAll(stockRepository.findByItemName(itemName));
+		return list;
+		
+	}
 	
 	public void deleteItem(Integer id) {
 		stockRepository.deleteById(id);
 		
 	}
-	
-	
 
 }

@@ -45,10 +45,10 @@ public class StockController {
 		stockService.editItem(wrapper);
 	}
 	
-	@PostMapping("/findItem")
-	public StockEntity findItem(@RequestParam("id")Integer id) {
-		return stockService.findItem(id);
-	}
+//	@PostMapping("/findItem")
+//	public StockEntity findItem(@RequestParam("id")Integer id) {
+//		return stockService.findItem(id);
+//	}
 	
 //	@PostMapping("/findUserByName")
 //	public List<StockEntity> findUserByName(@RequestParam("itemName")String itemName) {

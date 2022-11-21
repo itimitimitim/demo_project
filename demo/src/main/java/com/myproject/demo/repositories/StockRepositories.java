@@ -9,5 +9,5 @@ import com.myproject.demo.entity.StockEntity;
 
 @Repository
 public interface StockRepositories extends JpaRepository<StockEntity, Integer> {
-//	public List<StockEntity> findByItemName(String itemName);
+	public List<StockEntity> findByItemName(String itemName);
 }
