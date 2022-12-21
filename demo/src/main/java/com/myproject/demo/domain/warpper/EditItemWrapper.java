@@ -4,13 +4,15 @@ public class EditItemWrapper {
 	
 	private Integer itemID;
 	private String itemName;
+	private Double itemHigh;
 	
 	public EditItemWrapper() {
 	}
 
-	public EditItemWrapper(Integer itemID, String itemName) {
+	public EditItemWrapper(Integer itemID, String itemName, Double itemHigh) {
 		this.itemID = itemID;
 		this.itemName = itemName;
+		this.itemHigh = itemHigh;
 	}
 
 	public Integer getItemID() {
@@ -27,6 +29,14 @@ public class EditItemWrapper {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public Double getItemHigh() {
+		return itemHigh;
+	}
+
+	public void setItemHigh(Double itemHigh) {
+		this.itemHigh = itemHigh;
 	}
 	
 

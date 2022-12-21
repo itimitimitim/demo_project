@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="stock2")
+@Table(name="stock")
 public class StockEntity {
 
 	@Id
@@ -20,6 +20,15 @@ public class StockEntity {
 	
 	@Column(name="amount")
 	private Integer amount;
+	
+	@Column(name="itemhigh")
+	private Double itemHight;
+	
+	@Column(name="distance")
+	private Double distance;
+	
+	@Column(name="maxdistance")
+	private Double maxDistance;
 	
 	public StockEntity() {
 	}
@@ -46,6 +55,30 @@ public class StockEntity {
 
 	public void setAmount(Integer amount) {
 		this.amount = amount;
+	}
+
+	public Double getItemHight() {
+		return itemHight;
+	}
+
+	public void setItemHight(Double itemHight) {
+		this.itemHight = itemHight;
+	}
+
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
+	}
+
+	public Double getMaxDistance() {
+		return maxDistance;
+	}
+
+	public void setMaxDistance(Double maxDistance) {
+		this.maxDistance = maxDistance;
 	}
 	
 	

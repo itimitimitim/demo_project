@@ -3,14 +3,14 @@ package com.myproject.demo.domain.warpper;
 public class CreateItemWrapper {
 	
 	private String itemName;
-	private Integer amount;
+	private Double itemHigh;
 	
 	public CreateItemWrapper() {
 	}
 	
-	public CreateItemWrapper(String itemName, Integer amount) {
+	public CreateItemWrapper(String itemName, Double itemHigh) {
 		this.itemName = itemName;
-		this.amount = amount;
+		this.itemHigh = itemHigh;
 	}
 
 	public String getItemName() {
@@ -19,12 +19,15 @@ public class CreateItemWrapper {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public Integer getAmount() {
-		return amount;
+
+	public Double getItemHigh() {
+		return itemHigh;
 	}
-	public void setAmount(Integer amount) {
-		this.amount = amount;
+
+	public void setItemHigh(Double itemHigh) {
+		this.itemHigh = itemHigh;
 	}
+
 	
 	
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.myproject.demo.domain.warpper.CreateItemWrapper;
 import com.myproject.demo.domain.warpper.EditItemWrapper;
+import com.myproject.demo.domain.warpper.UpdateItemWrapper;
 import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.StockRepositories;
 
@@ -25,7 +26,10 @@ public class StockService {
 		
 		StockEntity entity = new StockEntity();
 		entity.setItemName(wrapper.getItemName());
-		entity.setAmount(wrapper.getAmount());
+		entity.setItemHight(wrapper.getItemHigh());
+		entity.setAmount(0);
+		entity.setDistance(0.00);
+		entity.setMaxDistance(0.00);
 		stockRepository.save(entity);
 		
 	}
@@ -33,22 +37,44 @@ public class StockService {
 	public void editItem(EditItemWrapper wrapper) {
 		StockEntity entity = stockRepository.findById(wrapper.getItemID()).get();
 		entity.setItemName(wrapper.getItemName());
+		entity.setItemHight(wrapper.getItemHigh());
 		stockRepository.save(entity);
 		
 	}
 	
-	public StockEntity findItem(Integer id) {
-		StockEntity entity = stockRepository.findById(id).get();
-		return entity;
-		
+	public void updateItem(UpdateItemWrapper wrapper) {
+		StockEntity entity = stockRepository.findById(wrapper.getItemID()).get();
+		entity.setDistance(wrapper.getDistance());
+		entity.setAmount(updateAmount(wrapper.getItemID(), wrapper.getDistance()));
+		stockRepository.save(entity);
 	}
 	
-	public List<StockEntity> findItemByName(String itemName) {
-		List<StockEntity> list = new ArrayList<StockEntity>();
-		list.addAll(stockRepository.findByItemName(itemName));
-		return list;
+	public void updateMaxDistance(Integer itemID) {
+		StockEntity entity = stockRepository.findById(itemID).get();
+		entity.setMaxDistance(entity.getDistance());
+		stockRepository.save(entity);
 		
+		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getDistance());
+		updateItem(wrapper);
 	}
+	
+	public Integer updateAmount(Integer itemID, Double distance) {
+		StockEntity entity = stockRepository.findById(itemID).get();
+		return (int)((entity.getMaxDistance() - distance)/entity.getItemHight());
+	}
+	
+//	public StockEntity findItem(Integer id) {
+//		StockEntity entity = stockRepository.findById(id).get();
+//		return entity;
+//		
+//	}
+//	
+//	public List<StockEntity> findItemByName(String itemName) {
+//		List<StockEntity> list = new ArrayList<StockEntity>();
+//		list.addAll(stockRepository.findByItemName(itemName));
+//		return list;
+//		
+//	}
 	
 	public void deleteItem(Integer id) {
 		stockRepository.deleteById(id);

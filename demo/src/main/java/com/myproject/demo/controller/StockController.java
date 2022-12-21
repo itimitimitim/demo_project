@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myproject.demo.domain.warpper.CreateItemWrapper;
 import com.myproject.demo.domain.warpper.EditItemWrapper;
+import com.myproject.demo.domain.warpper.UpdateItemWrapper;
 import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.StockRepositories;
 import com.myproject.demo.service.StockService;
@@ -41,8 +42,18 @@ public class StockController {
 	}
 	
 	@PostMapping("/editItem")
-	public void editUser(@RequestBody EditItemWrapper wrapper) {
+	public void editItem(@RequestBody EditItemWrapper wrapper) {
 		stockService.editItem(wrapper);
+	}
+	
+	@PostMapping("/updateItem")
+	public void updateItem(@RequestBody UpdateItemWrapper wrapper) {
+		stockService.updateItem(wrapper);
+	}
+	
+	@PostMapping("/updateMaxDistance")
+	public void updateMaxDistance(@RequestParam Integer itemID) {
+		stockService.updateMaxDistance(itemID);
 	}
 	
 //	@PostMapping("/findItem")
