@@ -51,9 +51,14 @@ public class StockController {
 		stockService.updateItem(wrapper);
 	}
 	
-	@PostMapping("/updateMaxDistance")
+	@PostMapping("/setMaxDistance")
 	public void updateMaxDistance(@RequestParam Integer itemID) {
-		stockService.updateMaxDistance(itemID);
+		stockService.setMaxDistance(itemID);
+	}
+	
+	@PostMapping("/setItemHigh")
+	public void setItemHigh(@RequestParam Integer itemID) {
+		stockService.setItemHigh(itemID);
 	}
 	
 //	@PostMapping("/findItem")

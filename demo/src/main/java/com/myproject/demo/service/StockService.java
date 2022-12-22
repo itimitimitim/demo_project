@@ -1,11 +1,9 @@
 package com.myproject.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.myproject.demo.domain.EnumDomain.AlertStatus;
 import com.myproject.demo.domain.warpper.CreateItemWrapper;
 import com.myproject.demo.domain.warpper.EditItemWrapper;
 import com.myproject.demo.domain.warpper.UpdateItemWrapper;
@@ -30,6 +28,8 @@ public class StockService {
 		entity.setAmount(0);
 		entity.setDistance(0.00);
 		entity.setMaxDistance(0.00);
+		entity.setAlertThrehold(wrapper.getAlertThrehold());
+		entity.setAlertStatus(AlertStatus.LOW);
 		stockRepository.save(entity);
 		
 	}
@@ -40,6 +40,8 @@ public class StockService {
 		entity.setItemHight(wrapper.getItemHigh());
 		stockRepository.save(entity);
 		
+		updateAlertStatus(wrapper.getItemID());
+		
 	}
 	
 	public void updateItem(UpdateItemWrapper wrapper) {
@@ -47,20 +49,44 @@ public class StockService {
 		entity.setDistance(wrapper.getDistance());
 		entity.setAmount(updateAmount(wrapper.getItemID(), wrapper.getDistance()));
 		stockRepository.save(entity);
+		
+		updateAlertStatus(wrapper.getItemID());
 	}
 	
-	public void updateMaxDistance(Integer itemID) {
+	public void setMaxDistance(Integer itemID) {
 		StockEntity entity = stockRepository.findById(itemID).get();
 		entity.setMaxDistance(entity.getDistance());
 		stockRepository.save(entity);
 		
 		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getDistance());
 		updateItem(wrapper);
+		updateAlertStatus(wrapper.getItemID());
+	}
+	
+	public void setItemHigh(Integer itemID) {
+		StockEntity entity = stockRepository.findById(itemID).get();
+		entity.setItemHight(entity.getMaxDistance() - entity.getDistance());
+		stockRepository.save(entity);
+		
+		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getDistance());
+		updateItem(wrapper);
+		updateAlertStatus(wrapper.getItemID());
 	}
 	
 	public Integer updateAmount(Integer itemID, Double distance) {
 		StockEntity entity = stockRepository.findById(itemID).get();
 		return (int)((entity.getMaxDistance() - distance)/entity.getItemHight());
+	}
+	
+	public void updateAlertStatus(Integer itemID) {
+		StockEntity entity = stockRepository.findById(itemID).get();
+		
+		if(entity.getAlertThrehold() >= entity.getAmount()) {
+			entity.setAlertStatus(AlertStatus.LOW);
+		}else {
+			entity.setAlertStatus(AlertStatus.NORMAL);
+		}
+		stockRepository.save(entity);
 	}
 	
 //	public StockEntity findItem(Integer id) {

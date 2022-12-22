@@ -4,13 +4,15 @@ public class CreateItemWrapper {
 	
 	private String itemName;
 	private Double itemHigh;
+	private Integer alertThrehold;
 	
 	public CreateItemWrapper() {
 	}
 	
-	public CreateItemWrapper(String itemName, Double itemHigh) {
+	public CreateItemWrapper(String itemName, Double itemHigh, Integer alertThrehold) {
 		this.itemName = itemName;
 		this.itemHigh = itemHigh;
+		this.alertThrehold = alertThrehold;
 	}
 
 	public String getItemName() {
@@ -28,6 +30,14 @@ public class CreateItemWrapper {
 		this.itemHigh = itemHigh;
 	}
 
+	public Integer getAlertThrehold() {
+		return alertThrehold;
+	}
+
+	public void setAlertThrehold(Integer alertThrehold) {
+		this.alertThrehold = alertThrehold;
+	}
+	
 	
 	
 
