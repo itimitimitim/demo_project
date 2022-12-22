@@ -24,7 +24,6 @@ public class StockService {
 		
 		StockEntity entity = new StockEntity();
 		entity.setItemName(wrapper.getItemName());
-		entity.setItemHight(wrapper.getItemHigh());
 		entity.setAmount(0);
 		entity.setDistance(0.00);
 		entity.setMaxDistance(0.00);
@@ -67,7 +66,7 @@ public class StockService {
 		entity.setDistance(wrapper.getDistance());
 		stockRepository.save(entity);
 		
-		updateAmount(wrapper.getItemID(), null);
+		updateAmount(wrapper.getItemID(), wrapper.getDistance());
 	}
 	
 	public void updateAmount(Integer itemID, Double distance) {
