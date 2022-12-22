@@ -4,16 +4,14 @@ public class EditItemWrapper {
 	
 	private Integer itemID;
 	private String itemName;
-	private Double itemHigh;
 	private Integer alertThrehold;
 	
 	public EditItemWrapper() {
 	}
 
-	public EditItemWrapper(Integer itemID, String itemName, Double itemHigh, Integer alertThrehold) {
+	public EditItemWrapper(Integer itemID, String itemName, Integer alertThrehold) {
 		this.itemID = itemID;
 		this.itemName = itemName;
-		this.itemHigh = itemHigh;
 		this.alertThrehold = alertThrehold;
 	}
 
@@ -31,14 +29,6 @@ public class EditItemWrapper {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
-	}
-
-	public Double getItemHigh() {
-		return itemHigh;
-	}
-
-	public void setItemHigh(Double itemHigh) {
-		this.itemHigh = itemHigh;
 	}
 
 	public Integer getAlertThrehold() {
