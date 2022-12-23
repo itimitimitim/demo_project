@@ -54,7 +54,7 @@ public class StockService {
 	
 	public void setItemHigh(Integer itemID) {
 		StockEntity entity = stockRepository.findById(itemID).get();
-		entity.setItemHight(entity.getMaxDistance() - entity.getDistance());
+		entity.setItemHight((entity.getMaxDistance() - entity.getDistance()));
 		stockRepository.save(entity);
 		
 		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getDistance());
