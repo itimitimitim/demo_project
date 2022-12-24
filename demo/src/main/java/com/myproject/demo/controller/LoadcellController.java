@@ -14,65 +14,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myproject.demo.domain.warpper.CreateItemWrapper;
 import com.myproject.demo.domain.warpper.EditItemWrapper;
-import com.myproject.demo.domain.warpper.UpdateItemWrapper;
-import com.myproject.demo.entity.StockEntity;
-import com.myproject.demo.repositories.StockRepositories;
-import com.myproject.demo.service.StockService;
+import com.myproject.demo.domain.warpper.UpdateItemLCWrapper;
+import com.myproject.demo.entity.LoadcellEntity;
+import com.myproject.demo.repositories.LoadcellRepositories;
+import com.myproject.demo.service.LoadcellService;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/api/v1")
-public class StockController {
+@RequestMapping(value = "/api/lc")
+public class LoadcellController {
 	
 	@Autowired
-	private StockService stockService;
+	private LoadcellService loadcellService;
 	
 	@Autowired
-	private StockRepositories stockRepository;
-
+	private LoadcellRepositories loadcellRepository;
+	
 	@GetMapping("/items")
-	public List<StockEntity> items(){
-		return stockRepository.findAll();
+	public List<LoadcellEntity> items(){
+		return loadcellRepository.findAll();
 	}
 	
 	@PostMapping("/createItem")
 	public void createItem(@RequestBody CreateItemWrapper wrapper) {
-		stockService.createItem(wrapper);
+		loadcellService.createItem(wrapper);
 	}
 	
 	@PostMapping("/editItem")
 	public void editItem(@RequestBody EditItemWrapper wrapper) {
-		stockService.editItem(wrapper);
+		loadcellService.editItem(wrapper);
 	}
 	
 	@PostMapping("/updateItem")
-	public void updateItem(@RequestBody UpdateItemWrapper wrapper) {
-		stockService.updateItem(wrapper);
+	public void updateItem(@RequestBody UpdateItemLCWrapper wrapper) {
+		loadcellService.updateItem(wrapper);
 	}
 	
-	@PostMapping("/setMaxDistance")
-	public void updateMaxDistance(@RequestParam Integer itemID) {
-		stockService.setMaxDistance(itemID);
-	}
-	
-	@PostMapping("/setItemHigh")
+	@PostMapping("/setItemWeight")
 	public void setItemHigh(@RequestParam Integer itemID) {
-		stockService.setItemHigh(itemID);
+		loadcellService.setItemWeight(itemID);
 	}
-	
-//	@PostMapping("/findItem")
-//	public StockEntity findItem(@RequestParam("id")Integer id) {
-//		return stockService.findItem(id);
-//	}
-	
-//	@PostMapping("/findUserByName")
-//	public List<StockEntity> findUserByName(@RequestParam("itemName")String itemName) {
-//		return stockService.findItemByName(itemName);
-//	}
 	
 	@DeleteMapping("/deleteItem")
 	public void deleteItem(@RequestParam("id")Integer id) {
-		stockService.deleteItem(id);
+		loadcellService.deleteItem(id);
 	}
+	
+	
 
 }

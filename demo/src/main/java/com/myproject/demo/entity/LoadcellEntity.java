@@ -12,9 +12,9 @@ import javax.persistence.Table;
 import com.myproject.demo.domain.EnumDomain.AlertStatus;
 
 @Entity
-@Table(name="stock")
-public class StockEntity {
-
+@Table(name="loadcell_stock")
+public class LoadcellEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer itemID;
@@ -25,14 +25,11 @@ public class StockEntity {
 	@Column(name="amount")
 	private Integer amount;
 	
-	@Column(name="itemhigh")
-	private Double itemHight;
+	@Column(name="itemweight")
+	private Double itemWeight;
 	
-	@Column(name="currentdistance")
-	private Double currentDistance;
-	
-	@Column(name="maxdistance")
-	private Double maxDistance;
+	@Column(name="currentweight")
+	private Double currentWeight;
 	
 	@Column(name="alertthrehold")
 	private Integer alertThrehold;
@@ -41,20 +38,19 @@ public class StockEntity {
 	@Enumerated(EnumType.STRING)
 	private AlertStatus alertStatus;
 	
-	public StockEntity() {
+	public LoadcellEntity() {
+		
 	}
 
-	public StockEntity(String itemName, Integer amount, Double itemHight, Double currentDistance,
-			Double maxDistance, Integer alertThrehold, AlertStatus alertStatus) {
+	public LoadcellEntity(String itemName, Integer amount, Double itemWeight, Double currentWeight,
+			Integer alertThrehold, AlertStatus alertStatus) {
 		this.itemName = itemName;
 		this.amount = amount;
-		this.itemHight = itemHight;
-		this.currentDistance = currentDistance;
-		this.maxDistance = maxDistance;
+		this.itemWeight = itemWeight;
+		this.currentWeight = currentWeight;
 		this.alertThrehold = alertThrehold;
 		this.alertStatus = alertStatus;
 	}
-
 
 	public Integer getItemID() {
 		return itemID;
@@ -80,28 +76,20 @@ public class StockEntity {
 		this.amount = amount;
 	}
 
-	public Double getItemHight() {
-		return itemHight;
+	public Double getItemWeight() {
+		return itemWeight;
 	}
 
-	public void setItemHight(Double itemHight) {
-		this.itemHight = itemHight;
+	public void setItemWeight(Double itemWeight) {
+		this.itemWeight = itemWeight;
 	}
 
-	public Double getCurrentDistance() {
-		return currentDistance;
+	public Double getCurrentWeight() {
+		return currentWeight;
 	}
 
-	public void setCurrentDistance(Double currentDistance) {
-		this.currentDistance = currentDistance;
-	}
-
-	public Double getMaxDistance() {
-		return maxDistance;
-	}
-
-	public void setMaxDistance(Double maxDistance) {
-		this.maxDistance = maxDistance;
+	public void setCurrentWeight(Double currentWeight) {
+		this.currentWeight = currentWeight;
 	}
 
 	public Integer getAlertThrehold() {
@@ -111,7 +99,7 @@ public class StockEntity {
 	public void setAlertThrehold(Integer alertThrehold) {
 		this.alertThrehold = alertThrehold;
 	}
-	
+
 	public AlertStatus getAlertStatus() {
 		return alertStatus;
 	}
@@ -119,7 +107,5 @@ public class StockEntity {
 	public void setAlertStatus(AlertStatus alertStatus) {
 		this.alertStatus = alertStatus;
 	}
-	
-	
-	
+
 }

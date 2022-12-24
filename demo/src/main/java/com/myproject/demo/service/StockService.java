@@ -21,68 +21,77 @@ public class StockService {
 	
 	public void createItem(CreateItemWrapper wrapper) {
 		throwService.checkItemnameAlreadyuse(wrapper.getItemName());
+		throwService.checkAlertThrehold(wrapper.getAlertThrehold());
 		
-		StockEntity entity = new StockEntity();
-		entity.setItemName(wrapper.getItemName());
-		entity.setAmount(0);
-		entity.setDistance(0.00);
-		entity.setMaxDistance(0.00);
-		entity.setAlertThrehold(wrapper.getAlertThrehold());
-		entity.setAlertStatus(AlertStatus.LOW);
+		StockEntity entity = new StockEntity(wrapper.getItemName(), 0, 0.00, 0.00, 0.00, wrapper.getAlertThrehold(), AlertStatus.LOW);
 		stockRepository.save(entity);
 	}
 	
 	public void editItem(EditItemWrapper wrapper) {
+		throwService.checkItemID(wrapper.getItemID());
+		throwService.checkItemnameAlreadyuse(wrapper.getItemName());
+		throwService.checkAlertThrehold(wrapper.getAlertThrehold());
+		
 		StockEntity entity = stockRepository.findById(wrapper.getItemID()).get();
 		entity.setItemName(wrapper.getItemName());
 		entity.setAlertThrehold(wrapper.getAlertThrehold());
 		stockRepository.save(entity);
 		
-		UpdateItemWrapper domain = new UpdateItemWrapper(wrapper.getItemID(), entity.getDistance());
+		UpdateItemWrapper domain = new UpdateItemWrapper(wrapper.getItemID(), entity.getCurrentDistance());
 		updateItem(domain);
 		
 	}
 	
 	public void setMaxDistance(Integer itemID) {
+		throwService.checkItemID(itemID);
+		
 		StockEntity entity = stockRepository.findById(itemID).get();
-		entity.setMaxDistance(entity.getDistance());
+		entity.setMaxDistance(entity.getCurrentDistance());
 		stockRepository.save(entity);
 		
-		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getDistance());
+		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getCurrentDistance());
 		updateItem(wrapper);
 	}
 	
 	public void setItemHigh(Integer itemID) {
+		throwService.checkItemID(itemID);
+		
 		StockEntity entity = stockRepository.findById(itemID).get();
-		entity.setItemHight((entity.getMaxDistance() - entity.getDistance()));
+		entity.setItemHight((entity.getMaxDistance() - entity.getCurrentDistance()));
 		stockRepository.save(entity);
 		
-		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getDistance());
+		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getCurrentDistance());
 		updateItem(wrapper);
 	}
 	
 	public void updateItem(UpdateItemWrapper wrapper) {
+		throwService.checkItemID(wrapper.getItemID());
+		
 		StockEntity entity = stockRepository.findById(wrapper.getItemID()).get();
-		entity.setDistance(wrapper.getDistance());
+		entity.setCurrentDistance(wrapper.getCurrentDistance());
 		stockRepository.save(entity);
 		
-		updateAmount(wrapper.getItemID(), wrapper.getDistance());
+		updateAmount(wrapper.getItemID(), wrapper.getCurrentDistance());
 	}
 	
-	public void updateAmount(Integer itemID, Double distance) {
+	public void updateAmount(Integer itemID, Double currentDistance) {
+		throwService.checkItemID(itemID);
+		
 		StockEntity entity = stockRepository.findById(itemID).get();
-		entity.setAmount((int)((entity.getMaxDistance() - distance)/entity.getItemHight()));
+		entity.setAmount((int)((entity.getMaxDistance() - currentDistance)/entity.getItemHight()));
 		stockRepository.save(entity);
 		
 		updateAlertStatus(itemID);
 	}
 	
 	public void updateAlertStatus(Integer itemID) {
+		throwService.checkItemID(itemID);
+		
 		StockEntity entity = stockRepository.findById(itemID).get();
 		
 		if(entity.getAlertThrehold() >= entity.getAmount()) {
 			entity.setAlertStatus(AlertStatus.LOW);
-		}else {
+		}else{
 			entity.setAlertStatus(AlertStatus.NORMAL);
 		}
 		stockRepository.save(entity);
@@ -101,9 +110,10 @@ public class StockService {
 //		
 //	}
 	
-	public void deleteItem(Integer id) {
-		stockRepository.deleteById(id);
+	public void deleteItem(Integer itemID) {
+		throwService.checkItemID(itemID);
 		
+		stockRepository.deleteById(itemID);
 	}
 
 }

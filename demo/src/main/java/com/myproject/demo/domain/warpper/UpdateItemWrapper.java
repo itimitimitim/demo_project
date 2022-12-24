@@ -3,14 +3,15 @@ package com.myproject.demo.domain.warpper;
 public class UpdateItemWrapper {
 	
 	private Integer itemID;
-	private Double distance;
+	private Double currentDistance;
 	
 	public UpdateItemWrapper() {
+		
 	}
 	
-	public UpdateItemWrapper(Integer itemID, Double distance) {
+	public UpdateItemWrapper(Integer itemID, Double currentDistance) {
 		this.itemID = itemID;
-		this.distance = distance;
+		this.currentDistance = currentDistance;
 	}
 
 	public Integer getItemID() {
@@ -21,14 +22,13 @@ public class UpdateItemWrapper {
 		this.itemID = itemID;
 	}
 
-	public Double getDistance() {
-		return distance;
+	public Double getCurrentDistance() {
+		return currentDistance;
 	}
 
-	public void setDistance(Double distance) {
-		this.distance = distance;
+	public void setCurrentDistance(Double currentDistance) {
+		this.currentDistance = currentDistance;
 	}
-	
-	
+
 
 }
