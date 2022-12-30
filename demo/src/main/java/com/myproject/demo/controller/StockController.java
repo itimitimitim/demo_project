@@ -60,10 +60,10 @@ public class StockController {
 		stockService.setItemHigh(itemID);
 	}
 	
-//	@PostMapping("/findItem")
-//	public StockEntity findItem(@RequestParam("id")Integer id) {
-//		return stockService.findItem(id);
-//	}
+	@GetMapping("/findItemByID")
+	public StockEntity findItem(@RequestParam("itemID")Integer itemID) {
+		return stockService.findItem(itemID);
+	}
 	
 //	@PostMapping("/findUserByName")
 //	public List<StockEntity> findUserByName(@RequestParam("itemName")String itemName) {
@@ -71,8 +71,8 @@ public class StockController {
 //	}
 	
 	@DeleteMapping("/deleteItem")
-	public void deleteItem(@RequestParam("id")Integer id) {
-		stockService.deleteItem(id);
+	public void deleteItem(@RequestParam("id")Integer itemID) {
+		stockService.deleteItem(itemID);
 	}
 
 }

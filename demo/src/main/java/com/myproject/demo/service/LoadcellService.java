@@ -8,6 +8,7 @@ import com.myproject.demo.domain.warpper.CreateItemWrapper;
 import com.myproject.demo.domain.warpper.EditItemWrapper;
 import com.myproject.demo.domain.warpper.UpdateItemLCWrapper;
 import com.myproject.demo.entity.LoadcellEntity;
+import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.LoadcellRepositories;
 
 @Service
@@ -84,6 +85,13 @@ public class LoadcellService {
 			entity.setAlertStatus(AlertStatus.NORMAL);
 		}
 		loadcellRepository.save(entity);
+	}
+	
+	public LoadcellEntity findItem(Integer itemID) {
+		throwService.checkItemIDLC(itemID);
+		
+		LoadcellEntity entity = loadcellRepository.findById(itemID).get();
+		return entity;
 	}
 	
 	public void deleteItem(Integer itemID) {

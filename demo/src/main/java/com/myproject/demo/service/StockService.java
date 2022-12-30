@@ -57,7 +57,7 @@ public class StockService {
 		throwService.checkItemID(itemID);
 		
 		StockEntity entity = stockRepository.findById(itemID).get();
-		entity.setItemHight((entity.getMaxDistance() - entity.getCurrentDistance()));
+		entity.setItemHight(Math.abs((entity.getMaxDistance() - entity.getCurrentDistance())));
 		stockRepository.save(entity);
 		
 		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getCurrentDistance());
@@ -97,12 +97,14 @@ public class StockService {
 		stockRepository.save(entity);
 	}
 	
-//	public StockEntity findItem(Integer id) {
-//		StockEntity entity = stockRepository.findById(id).get();
-//		return entity;
-//		
-//	}
-//	
+	public StockEntity findItem(Integer itemID) {
+		throwService.checkItemID(itemID);
+		
+		StockEntity entity = stockRepository.findById(itemID).get();
+		return entity;
+		
+	}
+	
 //	public List<StockEntity> findItemByName(String itemName) {
 //		List<StockEntity> list = new ArrayList<StockEntity>();
 //		list.addAll(stockRepository.findByItemName(itemName));

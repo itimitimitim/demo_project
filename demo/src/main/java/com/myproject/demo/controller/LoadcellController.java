@@ -16,6 +16,7 @@ import com.myproject.demo.domain.warpper.CreateItemWrapper;
 import com.myproject.demo.domain.warpper.EditItemWrapper;
 import com.myproject.demo.domain.warpper.UpdateItemLCWrapper;
 import com.myproject.demo.entity.LoadcellEntity;
+import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.LoadcellRepositories;
 import com.myproject.demo.service.LoadcellService;
 
@@ -53,6 +54,11 @@ public class LoadcellController {
 	@PostMapping("/setItemWeight")
 	public void setItemHigh(@RequestParam Integer itemID) {
 		loadcellService.setItemWeight(itemID);
+	}
+	
+	@GetMapping("/findItemByID")
+	public LoadcellEntity findItem(@RequestParam("itemID")Integer itemID) {
+		return loadcellService.findItem(itemID);
 	}
 	
 	@DeleteMapping("/deleteItem")
