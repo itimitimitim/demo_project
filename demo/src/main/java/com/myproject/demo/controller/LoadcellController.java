@@ -65,6 +65,11 @@ public class LoadcellController {
 	public void deleteItem(@RequestParam("id")Integer id) {
 		loadcellService.deleteItem(id);
 	}
+
+	@PostMapping("/setTare")
+	public void setTare(@RequestParam Integer itemID) {
+		loadcellService.setTare(itemID);
+	}
 	
 	
 

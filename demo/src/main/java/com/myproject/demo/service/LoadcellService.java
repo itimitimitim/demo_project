@@ -24,7 +24,13 @@ public class LoadcellService {
 		throwService.checkItemnameAlreadyuseLC(wrapper.getItemName());
 		throwService.checkAlertThrehold(wrapper.getAlertThrehold());
 		
-		LoadcellEntity entity = new LoadcellEntity(wrapper.getItemName(), 0, 0.00, 0.00, wrapper.getAlertThrehold(), AlertStatus.LOW);
+		LoadcellEntity entity = new LoadcellEntity(wrapper.getItemName(),
+				0,
+				0.00,
+				0.00,
+				0.00,
+				wrapper.getAlertThrehold(),
+				AlertStatus.LOW);
 		loadcellRepository.save(entity);
 	}
 	
@@ -40,18 +46,16 @@ public class LoadcellService {
 		
 		UpdateItemLCWrapper domain = new UpdateItemLCWrapper(wrapper.getItemID(), entity.getCurrentWeight());
 		updateItem(domain);
-		
 	}
 	
 	public void setItemWeight(Integer itemID) {
 		throwService.checkItemIDLC(itemID);
 		
 		LoadcellEntity entity = loadcellRepository.findById(itemID).get();
-		entity.setItemWeight(entity.getCurrentWeight());
+		entity.setItemWeight(entity.getCurrentWeight() - entity.getTare());
 		loadcellRepository.save(entity);
-		
-		UpdateItemLCWrapper wrapper = new UpdateItemLCWrapper(itemID, entity.getCurrentWeight());
-		updateItem(wrapper);
+
+		updateItem(new UpdateItemLCWrapper(itemID, entity.getCurrentWeight()));
 	}
 	
 	public void updateItem(UpdateItemLCWrapper wrapper) {
@@ -66,9 +70,12 @@ public class LoadcellService {
 	
 	public void updateAmount(Integer itemID, Double currentWeight) {
 		throwService.checkItemIDLC(itemID);
-		
+
 		LoadcellEntity entity = loadcellRepository.findById(itemID).get();
-		entity.setAmount((int)((entity.getCurrentWeight()/entity.getItemWeight())));
+		int realWeight = (int)((entity.getCurrentWeight() - entity.getTare()));
+		int amount = (int)Math.round((Math.abs(realWeight) / entity.getItemWeight()));
+
+		entity.setAmount(amount);
 		loadcellRepository.save(entity);
 		
 		updateAlertStatus(itemID);
@@ -98,6 +105,17 @@ public class LoadcellService {
 		throwService.checkItemIDLC(itemID);
 		
 		loadcellRepository.deleteById(itemID);
+	}
+
+	public void setTare(Integer itemID){
+		throwService.checkItemIDLC(itemID);
+
+		LoadcellEntity entity = loadcellRepository.findById(itemID).get();
+		entity.setTare(entity.getCurrentWeight());
+
+		loadcellRepository.save(entity);
+
+		updateItem(new UpdateItemLCWrapper(itemID, entity.getCurrentWeight()));
 	}
 	
 

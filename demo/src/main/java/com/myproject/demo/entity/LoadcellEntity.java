@@ -30,6 +30,9 @@ public class LoadcellEntity {
 	
 	@Column(name="currentweight")
 	private Double currentWeight;
+
+	@Column(name="tare")
+	private Double tare;
 	
 	@Column(name="alertthrehold")
 	private Integer alertThrehold;
@@ -42,12 +45,13 @@ public class LoadcellEntity {
 		
 	}
 
-	public LoadcellEntity(String itemName, Integer amount, Double itemWeight, Double currentWeight,
+	public LoadcellEntity(String itemName, Integer amount, Double itemWeight, Double currentWeight, Double tare,
 			Integer alertThrehold, AlertStatus alertStatus) {
 		this.itemName = itemName;
 		this.amount = amount;
 		this.itemWeight = itemWeight;
 		this.currentWeight = currentWeight;
+		this.tare = tare;
 		this.alertThrehold = alertThrehold;
 		this.alertStatus = alertStatus;
 	}
@@ -108,4 +112,11 @@ public class LoadcellEntity {
 		this.alertStatus = alertStatus;
 	}
 
+	public Double getTare() {
+		return tare;
+	}
+
+	public void setTare(Double tare) {
+		this.tare = tare;
+	}
 }

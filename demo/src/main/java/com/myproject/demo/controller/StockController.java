@@ -64,12 +64,7 @@ public class StockController {
 	public StockEntity findItem(@RequestParam("itemID")Integer itemID) {
 		return stockService.findItem(itemID);
 	}
-	
-//	@PostMapping("/findUserByName")
-//	public List<StockEntity> findUserByName(@RequestParam("itemName")String itemName) {
-//		return stockService.findItemByName(itemName);
-//	}
-	
+
 	@DeleteMapping("/deleteItem")
 	public void deleteItem(@RequestParam("id")Integer itemID) {
 		stockService.deleteItem(itemID);

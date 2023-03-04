@@ -36,9 +36,8 @@ public class StockService {
 		entity.setItemName(wrapper.getItemName());
 		entity.setAlertThrehold(wrapper.getAlertThrehold());
 		stockRepository.save(entity);
-		
-		UpdateItemWrapper domain = new UpdateItemWrapper(wrapper.getItemID(), entity.getCurrentDistance());
-		updateItem(domain);
+
+		updateItem(new UpdateItemWrapper(wrapper.getItemID(), entity.getCurrentDistance()));
 		
 	}
 	
@@ -48,9 +47,8 @@ public class StockService {
 		StockEntity entity = stockRepository.findById(itemID).get();
 		entity.setMaxDistance(entity.getCurrentDistance());
 		stockRepository.save(entity);
-		
-		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getCurrentDistance());
-		updateItem(wrapper);
+
+		updateItem(new UpdateItemWrapper(itemID, entity.getCurrentDistance()));
 	}
 	
 	public void setItemHigh(Integer itemID) {
@@ -59,9 +57,8 @@ public class StockService {
 		StockEntity entity = stockRepository.findById(itemID).get();
 		entity.setItemHight(Math.abs((entity.getMaxDistance() - entity.getCurrentDistance())));
 		stockRepository.save(entity);
-		
-		UpdateItemWrapper wrapper = new UpdateItemWrapper(itemID, entity.getCurrentDistance());
-		updateItem(wrapper);
+
+		updateItem(new UpdateItemWrapper(itemID, entity.getCurrentDistance()));
 	}
 	
 	public void updateItem(UpdateItemWrapper wrapper) {
@@ -76,7 +73,7 @@ public class StockService {
 	
 	public void updateAmount(Integer itemID, Double currentDistance) {
 		throwService.checkItemID(itemID);
-		
+
 		StockEntity entity = stockRepository.findById(itemID).get();
 		entity.setAmount((int)((entity.getMaxDistance() - currentDistance)/entity.getItemHight()));
 		stockRepository.save(entity);
@@ -117,5 +114,4 @@ public class StockService {
 		
 		stockRepository.deleteById(itemID);
 	}
-
 }
