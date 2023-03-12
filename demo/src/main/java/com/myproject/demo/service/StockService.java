@@ -10,6 +10,8 @@ import com.myproject.demo.domain.warpper.UpdateItemWrapper;
 import com.myproject.demo.entity.StockEntity;
 import com.myproject.demo.repositories.StockRepositories;
 
+import java.text.DecimalFormat;
+
 @Service
 public class StockService {
 	
@@ -18,6 +20,8 @@ public class StockService {
 	
 	@Autowired
 	private ThrowService throwService;
+
+	private static final DecimalFormat df = new DecimalFormat("0.00");
 	
 	public void createItem(CreateItemWrapper wrapper) {
 		throwService.checkItemnameAlreadyuse(wrapper.getItemName());
@@ -75,7 +79,7 @@ public class StockService {
 		throwService.checkItemID(itemID);
 
 		StockEntity entity = stockRepository.findById(itemID).get();
-		entity.setAmount((int)((entity.getMaxDistance() - currentDistance)/entity.getItemHight()));
+		entity.setAmount(calAmount(entity.getMaxDistance(), currentDistance, entity.getItemHight()));
 		stockRepository.save(entity);
 		
 		updateAlertStatus(itemID);
@@ -96,22 +100,19 @@ public class StockService {
 	
 	public StockEntity findItem(Integer itemID) {
 		throwService.checkItemID(itemID);
-		
-		StockEntity entity = stockRepository.findById(itemID).get();
-		return entity;
+		return stockRepository.findById(itemID).get();
 		
 	}
-	
-//	public List<StockEntity> findItemByName(String itemName) {
-//		List<StockEntity> list = new ArrayList<StockEntity>();
-//		list.addAll(stockRepository.findByItemName(itemName));
-//		return list;
-//		
-//	}
 	
 	public void deleteItem(Integer itemID) {
 		throwService.checkItemID(itemID);
 		
 		stockRepository.deleteById(itemID);
 	}
+
+	public int calAmount(Double max, Double current, Double high){
+		return (int)(max - current / high);
+	}
+
+
 }

@@ -72,10 +72,11 @@ public class LoadcellService {
 		throwService.checkItemIDLC(itemID);
 
 		LoadcellEntity entity = loadcellRepository.findById(itemID).get();
-		int realWeight = (int)((entity.getCurrentWeight() - entity.getTare()));
-		int amount = (int)Math.round((Math.abs(realWeight) / entity.getItemWeight()));
+//		int realWeight = (int)((entity.getCurrentWeight() - entity.getTare()));
+//		int amount = (int)Math.round((Math.abs(realWeight) / entity.getItemWeight()));
+//		amount(entity.getTare(), entity.getCurrentWeight(), entity.getItemWeight());
 
-		entity.setAmount(amount);
+		entity.setAmount(calAmount(entity.getTare(), entity.getCurrentWeight(), entity.getItemWeight()));
 		loadcellRepository.save(entity);
 		
 		updateAlertStatus(itemID);
@@ -96,9 +97,7 @@ public class LoadcellService {
 	
 	public LoadcellEntity findItem(Integer itemID) {
 		throwService.checkItemIDLC(itemID);
-		
-		LoadcellEntity entity = loadcellRepository.findById(itemID).get();
-		return entity;
+		return loadcellRepository.findById(itemID).get();
 	}
 	
 	public void deleteItem(Integer itemID) {
@@ -116,6 +115,10 @@ public class LoadcellService {
 		loadcellRepository.save(entity);
 
 		updateItem(new UpdateItemLCWrapper(itemID, entity.getCurrentWeight()));
+	}
+
+	public int calAmount(Double tare, Double current, Double weight){
+		return (int)Math.round((Math.abs((current - tare) / weight)));
 	}
 	
 
